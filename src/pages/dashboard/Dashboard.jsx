@@ -1,12 +1,12 @@
-import { UserButton } from '@clerk/clerk-react'
-import React from 'react'
+import AddResume from "@/components/custom/AddResume";
+import React from "react";
 
 function Dashboard() {
   return (
     <div>
-        <UserButton/>
+      <AddResume />
     </div>
-  )
+  );
 }
 
-export default Dashboard
+export default Dashboard;
