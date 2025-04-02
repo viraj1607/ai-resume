@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { PlusSquare } from "lucide-react";
+import { Loader, PlusSquare } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -11,14 +11,38 @@ import {
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { v4 as uuidv4 } from "uuid";
+import GlobalApi from "../../../service/GlobalApi";
+import { useUser } from "@clerk/clerk-react";
 
 function AddResume() {
   const [isOpen, setIsOpen] = useState(false);
   const [resumeTitle, setResumeTitle] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { user } = useUser();
 
-  const onCreate = () => {
+  const onCreate = async() => {
+    setLoading(false);
     const uuid = uuidv4();
-    console.log(resumeTitle, uuid);
+    // console.log(resumeTitle, uuid);
+    const data = {
+      data: {
+        title: resumeTitle,
+        resumeId: uuid,
+        userEmail: user?.primaryEmailAddress?.emailAddress,
+        userName: user?.fullName,
+      },
+    };
+    GlobalApi.createResume(data).then(
+      (res) => {
+        console.log(res);
+        if (res) {
+          setLoading(false);
+        }
+      },
+      (err) => {
+        setLoading(false);
+      }
+    );
   };
   return (
     <div>
@@ -43,8 +67,8 @@ function AddResume() {
               <Button variant="ghost" onClick={() => setIsOpen(false)}>
                 Cancel
               </Button>
-              <Button onClick={() => onCreate()} disabled={!resumeTitle}>
-                Create
+              <Button onClick={() => onCreate()} disabled={!resumeTitle || loading}>
+                {loading?<Loader className="animate-spin"/>:"Create"}
               </Button>
             </div>
           </DialogHeader>
