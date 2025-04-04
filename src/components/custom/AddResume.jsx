@@ -13,14 +13,16 @@ import { Input } from "../ui/input";
 import { v4 as uuidv4 } from "uuid";
 import GlobalApi from "../../../service/GlobalApi";
 import { useUser } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
 
 function AddResume() {
   const [isOpen, setIsOpen] = useState(false);
   const [resumeTitle, setResumeTitle] = useState("");
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
+  const navigate = useNavigate();
 
-  const onCreate = async() => {
+  const onCreate = async () => {
     setLoading(false);
     const uuid = uuidv4();
     // console.log(resumeTitle, uuid);
@@ -34,9 +36,10 @@ function AddResume() {
     };
     GlobalApi.createResume(data).then(
       (res) => {
-        console.log(res);
+        // console.log(res);
         if (res) {
           setLoading(false);
+          navigate(`/dashboard/resume/${res.data.data.documentId}/edit`);
         }
       },
       (err) => {
@@ -67,8 +70,11 @@ function AddResume() {
               <Button variant="ghost" onClick={() => setIsOpen(false)}>
                 Cancel
               </Button>
-              <Button onClick={() => onCreate()} disabled={!resumeTitle || loading}>
-                {loading?<Loader className="animate-spin"/>:"Create"}
+              <Button
+                onClick={() => onCreate()}
+                disabled={!resumeTitle || loading}
+              >
+                {loading ? <Loader className="animate-spin" /> : "Create"}
               </Button>
             </div>
           </DialogHeader>
