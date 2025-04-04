@@ -6,7 +6,7 @@ import { UserButton, useUser } from "@clerk/clerk-react";
 function Header() {
   const { isSignedIn, user, isLoaded } = useUser();
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center p-5 bg-gray-50">
       <h1 className="font-extrabold text-3xl">AI Resume Builder</h1>
       {isSignedIn ? (
         <UserButton />
