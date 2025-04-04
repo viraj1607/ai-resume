@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import PersonalDetailsPreview from "./PersonalDetailsPreview";
 import { ResumeInfo } from "@/context/ResumeInfo";
+import SummaryPreview from "./SummaryPreview";
 
 function PreviewSection() {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfo);
@@ -13,6 +14,7 @@ function PreviewSection() {
       style={{ borderColor: resumeInfo?.themeColor }}
     >
       <PersonalDetailsPreview personalData={resumeInfo} />
+      <SummaryPreview summaryData={resumeInfo} />
     </div>
   );
 }
