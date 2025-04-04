@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import PersonalDetailsPreview from "./PersonalDetailsPreview";
 import { ResumeInfo } from "@/context/ResumeInfo";
 import SummaryPreview from "./SummaryPreview";
+import ExpPreview from "./ExpPreview";
 
 function PreviewSection() {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfo);
@@ -15,6 +16,7 @@ function PreviewSection() {
     >
       <PersonalDetailsPreview personalData={resumeInfo} />
       <SummaryPreview summaryData={resumeInfo} />
+      <ExpPreview expData={resumeInfo}/>
     </div>
   );
 }
