@@ -1,9 +1,20 @@
-import React from 'react'
+import React, { useContext, useEffect } from "react";
+import PersonalDetailsPreview from "./PersonalDetailsPreview";
+import { ResumeInfo } from "@/context/ResumeInfo";
 
 function PreviewSection() {
+  const { resumeInfo, setResumeInfo } = useContext(ResumeInfo);
+  useEffect(() => {
+    console.log(resumeInfo);
+  }, []);
   return (
-    <div>PreviewSection</div>
-  )
+    <div
+      className="shadow-lg h-full p-14 border-t-[20px]"
+      style={{ borderColor: resumeInfo?.themeColor }}
+    >
+      <PersonalDetailsPreview personalData={resumeInfo} />
+    </div>
+  );
 }
 
-export default PreviewSection
+export default PreviewSection;
