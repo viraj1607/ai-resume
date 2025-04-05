@@ -4,6 +4,7 @@ import { ResumeInfo } from "@/context/ResumeInfo";
 import SummaryPreview from "./SummaryPreview";
 import ExpPreview from "./ExpPreview";
 import EduPreview from "./EduPreview";
+import SkillPreview from "./SkillPreview";
 
 function PreviewSection() {
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfo);
@@ -19,6 +20,7 @@ function PreviewSection() {
       <SummaryPreview summaryData={resumeInfo} />
       <ExpPreview expData={resumeInfo} />
       <EduPreview eduData={resumeInfo} />
+      <SkillPreview skillData={resumeInfo} />
     </div>
   );
 }
