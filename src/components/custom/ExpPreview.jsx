@@ -12,7 +12,7 @@ function ExpPreview({ expData }) {
       <hr style={{ borderColor: expData?.themeColor }} />
       {expData?.experience.map((exp, ind) => (
         <div key={ind} className="my-5">
-          <h2 className="text-sm font-bold">{exp?.title}</h2>
+          <h2 className="text-sm font-bold" style={{color:expData?.themeColor}}>{exp?.title}</h2>
           <h2 className="text-sx flex justify-between">
             {exp?.companyName}, {exp?.city}, {exp?.state}
             <span>
