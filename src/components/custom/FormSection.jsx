@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import PersonalDetailForm from "./PersonalDetailForm";
 import { Button } from "../ui/button";
 import { ArrowLeft, ArrowRight, LayoutGrid } from "lucide-react";
+import Summary from "../form/Summary";
 
 function FormSection() {
   const [activeFormIndex, setActiveFormIndex] = useState(1);
-  const [isNext,setIsNext]=useState(false)
+  const [isNext, setIsNext] = useState(false);
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -30,13 +31,17 @@ function FormSection() {
             className="flex gap-2 items-center cursor-pointer"
             size="sm"
             onClick={() => setActiveFormIndex(activeFormIndex + 1)}
-            disabled={!isNext}
+            // disabled={!isNext}
           >
             Next <ArrowRight />
           </Button>
         </div>
       </div>
-      <PersonalDetailForm enableNext={(v)=>setIsNext(v)}/>
+      {activeFormIndex == 1 ? (
+        <PersonalDetailForm enableNext={(v) => setIsNext(v)} />
+      ) : activeFormIndex == 2 ? (
+        <Summary enableNext={(v) => setIsNext(v)} />
+      ) : null}
     </div>
   );
 }
