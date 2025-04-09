@@ -12,7 +12,12 @@ function ExpPreview({ expData }) {
       <hr style={{ borderColor: expData?.themeColor }} />
       {expData?.experience.map((exp, ind) => (
         <div key={ind} className="my-5">
-          <h2 className="text-sm font-bold" style={{color:expData?.themeColor}}>{exp?.title}</h2>
+          <h2
+            className="text-sm font-bold"
+            style={{ color: expData?.themeColor }}
+          >
+            {exp?.title}
+          </h2>
           <h2 className="text-xs flex justify-between">
             {exp?.companyName}, {exp?.city}, {exp?.state}
             <span>
@@ -20,7 +25,8 @@ function ExpPreview({ expData }) {
               {exp?.currentlyWorking ? "Present" : exp?.endDate}
             </span>
           </h2>
-          <p className="text-xs my-2">{exp?.workSummary}</p>
+          {/* <p className="text-xs my-2">{exp?.workSummary}</p> */}
+          <div dangerouslySetInnerHTML={{ __html: exp?.workSummary }} />
         </div>
       ))}
     </div>
