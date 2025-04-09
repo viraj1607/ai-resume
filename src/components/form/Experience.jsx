@@ -3,6 +3,9 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import RichTextEditor from "../custom/RichTextEditor";
 import { ResumeInfo } from "@/context/ResumeInfo";
+import GlobalApi from "../../../service/GlobalApi";
+import { useParams } from "react-router-dom";
+
 const experience = {
   title: "",
   companyName: "",
@@ -10,13 +13,14 @@ const experience = {
   state: "",
   startDate: "",
   endDate: "",
-  currentlyWorking: false,
+  // currentlyWorking: false,
   workSummary: "",
 };
 
 function Experience() {
   const [experienceList, setExperienceList] = useState([experience]);
   const { resumeInfo, setResumeInfo } = useContext(ResumeInfo);
+  const params = useParams();
 
   const handleChange = (ind, e) => {
     const newEntries = experienceList.slice();
@@ -33,15 +37,37 @@ function Experience() {
     setExperienceList((experienceList) => experienceList.slice(0, -1));
   };
 
-  const handleRichTextEditor=(e,name,ind)=>{
+  const handleRichTextEditor = (e, name, ind) => {
     const newEntries = experienceList.slice();
     newEntries[ind][name] = e.target.value;
     setExperienceList(newEntries);
-  }
+  };
 
-  useEffect(()=>{
-    setResumeInfo({...resumeInfo,experience:experienceList})
-  },[experienceList])
+  const onSave = (e) => {
+    e.preventDefault();
+    const data = {
+      data: {
+        experience: experienceList,
+      },
+    };
+    // console.log("data", data);
+
+    GlobalApi.updateResume(params?.resumeId, data).then(
+      (res) => {
+        // console.log("hi", res);
+        enableNext(true);
+        // console.log("test");
+        toast("Experience Details Updated");
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  };
+
+  useEffect(() => {
+    setResumeInfo({ ...resumeInfo, experience: experienceList });
+  }, [experienceList]);
   return (
     <div>
       <div className="p-5 shadow-lg rounded-lg border-t-primary">
@@ -91,7 +117,12 @@ function Experience() {
                   <Input name="title" onChange={(e) => handleChange(ind, e)} />
                 </div> */}
                 <div className="col-span-2">
-                  <RichTextEditor ind={ind} onChnageRTE={(e)=>handleRichTextEditor(e,"workSummary",ind)}/>
+                  <RichTextEditor
+                    ind={ind}
+                    onChnageRTE={(e) =>
+                      handleRichTextEditor(e, "workSummary", ind)
+                    }
+                  />
                 </div>
               </div>
             </div>
@@ -106,7 +137,7 @@ function Experience() {
               Remove
             </Button>
           </div>
-          <Button>Save</Button>
+          <Button onClick={onSave}>Save</Button>
         </div>
       </div>
     </div>
